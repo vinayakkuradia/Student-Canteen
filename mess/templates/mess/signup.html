@@ -1,0 +1,189 @@
+{% extends 'mess/index.html' %}
+{% load static %}
+
+    {% block title %}
+    <title>Ristorante Con Fusion: Sign Up</title>
+    {% endblock %}
+    {% block content %}
+<body>
+    <nav class="navbar navbar-dark navbar-expand-sm fixed-top shadow">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#"><img src="{% static "img/logo.png" %}" height="30" width="41"></a>
+            <div class="collapse navbar-collapse" id="Navbar">
+                <ul class="navbar-nav mr-auto">
+                        <li class="nav-item"><a class="nav-link" href="/"><span class="fa fa-home fa-lg"></span> Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/signup/"><span class="fa fa-info fa-lg"></span> Sign Up</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#"><span class="fa fa-list fa-lg"></span> Menu</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="#"><span class="fa fa-address-card fa-lg"></span> Contact</a></li>
+                </ul>
+            </div>
+            {% if user.is_authenticated %}
+            <div class="usertools">
+                Hello, <strong>{{ user.username }} </strong></h3><a href="/logout/"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i></a>
+            </div>
+            {% else %}
+            <span class="navbar-text">
+                <a role="button" id="loginModalToggle">
+                    <span class="fa fa-sign-in"></span> Login
+                </a>
+            </span>
+            {% endif %}
+        </div>
+    </nav>
+    <div id="loginModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg" role="content">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Login</h4>
+                    <botton class="close" data-dismiss="modal">
+                        &times;
+                    </botton>
+                </div>
+                <div class="modal-body">
+                    <!--<form>
+                        <div class="form-row">
+                            <div class="form-group col-sm-4">
+                                    <label class="sr-only" for="mobile">Mobile Number</label>
+                                    <input type="tel" maxlength="10" pattern="[7-9]{1}[0-9]{9}" class="form-control form-control-sm mr-1" id="mobile" placeholder="Mobile No.">
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label class="sr-only" for="password">Password</label>
+                                <input type="password" class="form-control form-control-sm mr-1" id="password" placeholder="Password">
+                            </div>
+                            <div class="col-sm-auto">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox">
+                                    <label class="form-check-label">Remember me</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <button type="button" class="btn btn-secondary btn-sm ml-auto" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary btn-sm ml-1">Log in</button>
+                        </div>
+                    </form>-->
+                    <form method="POST" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="form-group col-sm-4">
+                                    <label class="sr-only" for="mobile">Username</label>
+                                    <input type="text" class="form-control form-control-sm mr-1" name="username" placeholder="Username">
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label class="sr-only" for="password">Password</label>
+                                <input type="password" class="form-control form-control-sm mr-1" name="password" placeholder="Password">
+                            </div>
+                            <div class="col-sm-auto">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox">
+                                    <label class="form-check-label">Remember me</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <button type="button" class="btn btn-secondary btn-sm ml-auto" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary btn-sm ml-1">Log in</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <header class="jumbotron">
+        <div class="container">
+            <div class="row row-header">
+                <div class="col-12 col-sm-6">
+                    <h1>Student Mess</h1>
+                    <p>We provide best quality food, with taste similar to your mother's hand made food, at reasonable price to our students. Enjoy your meal!</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <ol class="col-12 breadcrumb">
+                <li class="breadcrumb-item"><a href="./index.html">Home</a></li>
+                <li class="breadcrumb-item active">Sign Up</li>
+            </ol>
+            <div class="col-12">
+               <h4>Student Registration Portal</h4>
+               <hr>
+            </div>
+        </div>
+
+        <div class="row row-content">
+            <div class="col-12 col-md-9">
+                <form method="POST" action="{% url 'signup' %}">
+                    <div class="form-row">
+                      <div class="col-9">
+                        <label for="inlineFormInput">Name</label>
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control mb-2" id="firstname" name="firstname" placeholder="First Name">
+                            <input type="text" class="form-control mb-2" id="lastname" name="lastname" placeholder="Last Name">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3 col-sm-12">
+                            <label for="roomnumber">Room No.</label>
+                            <input type="text" class="form-control mb-2" id="roomnumber" name="roomnumber" placeholder="Room Number">
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <label for="mobile">Mobile No.</label>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">+91</div>
+                                    </div>
+                                <input type="tel" class="form-control" id="mobile" maxlength="10" pattern="[7-9]{1}[0-9]{9}" name="mobile" placeholder="Mobile No.">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-4">
+                            <label for="password">Password</label>
+                            <input type="password" minlength="8" maxlength="20" id="password" class="form-control mb-2">
+                            <small id="passwordHelpInline" class="text-muted">
+                            Must be 8-20 characters long.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+       </div>
+        <div class="row">
+            <ol class="col-12 breadcrumb">
+                <li class="breadcrumb-item"><a href="./index.html">Home</a></li>
+                <li class="breadcrumb-item active">Sign Up</li>
+            </ol>
+            <div class="col-12">
+               <h3>Registration</h3>
+               <hr>
+            </div>
+        </div>
+        <div class="row row-content">
+            <div class="col-12 col-md-9">
+                <form method="POST" action="{% url 'signup' %}">
+                    {% csrf_token %}
+
+                    {% if form.errors %}
+                    <p>There are error(s) in form</p>
+                    {% endif %}
+
+                    {{ form }}
+
+                    <input type="submit" value="Register">
+                </form>
+            </div>
+       </div>
+
+    </div>
+{% endblock %}
