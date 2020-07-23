@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['VKDude.pythonanywhere.com']
 
 INSTALLED_APPS = [
     'mess',
+    'phonenumber_field',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -67,6 +68,8 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTH_USER_MODEL = 'mess.Student'
 
 WSGI_APPLICATION = 'project.wsgi.application'
 

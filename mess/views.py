@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib import auth, messages
 from django.contrib.messages import info
+from mess.admin import UserCreationForm
 
 # Create your views here.
 def home(request):
@@ -9,10 +9,10 @@ def home(request):
 
 def login(request):
     if request.method == 'POST':
-        username = request.POST['username']
+        mobile = request.POST['mobile']
         password = request.POST['password']
 
-        user = auth.authenticate(username=username, password=password)
+        user = auth.authenticate(mobile=mobile, password=password)
 
         if user is not None:
             auth.login(request, user)
@@ -36,11 +36,13 @@ def signup(request):
 
         if form.is_valid():
             form.save()
-            username = form.cleaned_data['username']
+            mobile = form.cleaned_data['mobile']
             password = form.cleaned_data['password1']
-            user = auth.authenticate(username=username, password=password)
+            user = auth.authenticate(mobile=mobile, password=password)
             auth.login(request, user)
             return redirect('home')
+        else:
+            redirect('signup')
     else:
         form = UserCreationForm()
 

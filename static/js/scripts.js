@@ -95,3 +95,14 @@ $(".input-number").keydown(function (e) {
             e.preventDefault();
         }
     });
+
+
+//Form Modification
+/*
+$("#signup").on("submit", function (e) {
+        e.preventDefault();//stop submit event
+        var self = $(this);//this form
+        $("#mobile").val(("+91" + $("#mobile").val());//change input
+        $("#signup").off("submit");//need form submit event off.
+        self.submit();//submit form
+    });*/
