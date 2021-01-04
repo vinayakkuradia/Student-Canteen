@@ -1,4 +1,6 @@
+import uuid
 from django.db import models
+from django.core.validators import MaxValueValidator
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
@@ -73,4 +75,31 @@ class Student(AbstractBaseUser):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
         return True
+
+# Database Models
+
+payment_methods = ((1, 'Cash'), (2, 'PayTM/GPay'), (3, 'Credit'),)
+meal_types = ((1, 'Lunch'), (2, 'Dinner'),)
+
+class Order(models.Model):
+    order_id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
+    ordered_by = models.ForeignKey(Student, blank=False, null=False, on_delete=models.CASCADE)
+    datetime = models.DateTimeField(auto_now_add=True)
+    plate_count = models.PositiveIntegerField(validators=[MaxValueValidator(10)])
+    payment_method = models.PositiveIntegerField(choices=payment_methods)
+    meal_type = models.PositiveIntegerField(choices=meal_types)
+    confirmation_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.order_id)
+
+
+
+
+
+
+
+
+
+
 

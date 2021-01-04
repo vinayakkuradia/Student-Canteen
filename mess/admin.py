@@ -1,11 +1,14 @@
 from django import forms
 from django.contrib import admin
+from django.forms import ModelForm
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
+from mess.models import Order
 from mess.models import Student
 
+##########Custom User Model Configurations##########
 
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
@@ -85,3 +88,19 @@ admin.site.register(Student, UserAdmin)
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
 admin.site.unregister(Group)
+
+##########General Model Registration##########
+
+class OrderCreationForm(ModelForm):
+    class Meta:
+        model = Order
+        fields = ['plate_count', 'payment_method', 'meal_type']
+
+class OrderAdmin(admin.ModelAdmin):
+    list_display= ('order_id', 'ordered_by', 'datetime', 'plate_count', 'payment_method', 'meal_type', 'confirmation_status')
+    list_filter = ('ordered_by', 'datetime','payment_method', 'meal_type', 'confirmation_status',)
+    search_fields = ('ordered_by', 'datetime',)
+    ordering = ('datetime', 'ordered_by', 'confirmation_status',)
+
+# Register your models here.
+admin.site.register(Order, OrderAdmin)

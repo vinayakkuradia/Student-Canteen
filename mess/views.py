@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth, messages
 from django.contrib.messages import info
-from mess.admin import UserCreationForm
+from mess.serializers import OrdersDataSerializer, OrdersAdminDataSerializer, OrdersSerializer
+from django.contrib.auth.decorators import login_required
+
+from mess.models import Order, Student
+from mess.admin import UserCreationForm, OrderCreationForm
 
 # Create your views here.
 def home(request):
@@ -48,3 +52,33 @@ def signup(request):
 
     context = {'form' : form}
     return render(request, 'mess/signup.html', context)
+
+@login_required
+def process_order(request):
+    if request.method == 'POST':
+        form = OrderCreationForm(request.POST)
+        if form.is_valid():
+            formdata = form.save(commit=False)
+            formdata.ordered_by = Student.objects.get(mobile = request.user.mobile)
+            formdata.save()
+            info(request, 'Order placed successfully with Order ID: ' + str(formdata.order_id))
+            return redirect('home')
+        else:
+            info(request, 'Something went wrong! Please try again..')
+            return redirect('home')
+
+
+@login_required
+def myorders(request):
+    if request.method == 'GET':
+        if request.user.is_admin:
+            queryresult = Order.objects.all().order_by('-datetime')
+            serializer = OrdersSerializer(queryresult, many=True)
+            data = serializer.data
+            return render(request, 'mess/myorders.html', {'queryresult': data})
+        else:
+            queryresult = Order.objects.filter(ordered_by = (Student.objects.get(mobile=request.user.mobile))).order_by('-datetime')
+            serializer = OrdersSerializer(queryresult, many=True)
+            data = serializer.data
+            return render(request, 'mess/myorders.html', {'queryresult': data})
+

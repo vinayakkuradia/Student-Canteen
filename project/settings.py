@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['VKDude.pythonanywhere.com']
 
 INSTALLED_APPS = [
     'mess',
+    'rest_framework',
     'phonenumber_field',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -129,4 +130,5 @@ MEDIA_ROOT = '/home/VKDude/project/media'
 MEDIA_URL = '/media/'
 STATIC_ROOT = '/home/VKDude/project/static'
 STATIC_URL = '/static/'
+LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/'

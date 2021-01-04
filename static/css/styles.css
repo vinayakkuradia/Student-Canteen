@@ -126,3 +126,24 @@ body {
 .usertools a:hover {
     color: #3B434A !important;
 }
+
+.orders-table {
+
+}
+
+.table {
+    color: floralwhite !important;
+}
+
+.table tr:hover {
+    color: floralwhite !important;
+}
+
+.orders-table tbody {
+    background-color: rgb(22,22,22,0.3);
+}
+
+.orders-table td {
+    overflow: hidden;
+    white-space: nowrap;
+}
