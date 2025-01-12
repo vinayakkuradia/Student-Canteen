@@ -25,7 +25,7 @@ SECRET_KEY = 'oc!g97vn%0zs=#mwpczc8#smo_$+8dge0%jxhozp5ri)z=pndb'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['VKDude.pythonanywhere.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'VKDude.pythonanywhere.com']
 
 
 # Application definition
